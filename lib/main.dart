@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'dart:math';
 
 void main() {
@@ -40,7 +41,18 @@ class _IndecisionViewState extends State<IndecisionView> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return AlertDialog(content: Text(randomChoice));
+                    return AlertDialog(
+                      content: Text(randomChoice),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('Okay'),
+                          
+                        ),
+                      ],
+                    );
                   },
                 );
               }
@@ -48,25 +60,33 @@ class _IndecisionViewState extends State<IndecisionView> {
             child: const Text('Make Choice!'),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: choices.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(choices[index]),
-                  selected: selectedIndex == index,
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
-                );
-              },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListView.builder(
+                itemCount: choices.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(choices[index]),
+                    selected: selectedIndex == index,
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
+                  );
+                },
+              ),
             ),
           ),
           const Text('Option:'),
           TextField(
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               hintText: 'Enter Option',
             ),
             controller: optionController,
