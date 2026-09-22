@@ -33,7 +33,6 @@ class _IndecisionViewState extends State<IndecisionView> {
     return Scaffold(
       body: Column(
         children: [
-          const Text('Choices'),
           ElevatedButton(
             onPressed: () {
               if (choices.isNotEmpty) {
@@ -49,7 +48,6 @@ class _IndecisionViewState extends State<IndecisionView> {
                             Navigator.pop(context);
                           },
                           child: Text('Okay'),
-                          
                         ),
                       ],
                     );
@@ -59,6 +57,7 @@ class _IndecisionViewState extends State<IndecisionView> {
             },
             child: const Text('Make Choice!'),
           ),
+          const Text('Choices'),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -92,28 +91,34 @@ class _IndecisionViewState extends State<IndecisionView> {
             controller: optionController,
             focusNode: optionFocusNode,
           ),
-          ElevatedButton(
-            onPressed: () {
-              if (optionController.text.isNotEmpty) {
-                setState(() {
-                  choices.add(optionController.text);
-                  optionController.clear();
-                  optionFocusNode.requestFocus();
-                });
-              }
-            },
-            child: const Text('Add'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (selectedIndex != null) {
-                setState(() {
-                  choices.removeAt(selectedIndex!);
-                  selectedIndex = null;
-                });
-              }
-            },
-            child: const Text('Remove'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  if (optionController.text.isNotEmpty) {
+                    setState(() {
+                      choices.add(optionController.text);
+                      optionController.clear();
+                      optionFocusNode.requestFocus();
+                    });
+                  }
+                },
+                child: const Text('Add'),
+              ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  if (selectedIndex != null) {
+                    setState(() {
+                      choices.removeAt(selectedIndex!);
+                      selectedIndex = null;
+                    });
+                  }
+                },
+                child: const Text('Remove'),
+              ),
+            ],
           ),
         ],
       ),
